@@ -24,10 +24,11 @@ create_branch() {
   read -p "Enter the name of the new branch: " branch_name
   if git branch --list | grep -q "$branch_name"; then # Lista las ramas con ‘git branch –list’ y verifica con ‘grep -q’ si la rama existe en la salida
     echo "Error: The branch '$branch_name' already exists."
-  else
-    echo "Creating and switching to branch $branch_name..."
-    git checkout -b "$branch_name"
+    return
   fi
+
+  echo "Creating and switching to branch $branch_name..."
+  git checkout -b "$branch_name"
 }
 
 switch_branch() {
@@ -44,9 +45,10 @@ switch_branch() {
   if git branch --list | grep -q "$branch_name"; then
     echo "Switching to branch $branch_name..."
     git checkout "$branch_name"
-  else
-    echo "Error: The branch '$branch_name' does not exist."
+    return
   fi
+
+  echo "Error: The branch '$branch_name' does not exist."
 }
 
 git_commit() {
