@@ -42,13 +42,13 @@ switch_branch() {
   echo "$branches"
 
   read -p "Enter the name of the branch you want to switch to: " branch_name
-  if git branch --list | grep -q "$branch_name"; then
-    echo "Switching to branch $branch_name..."
-    git checkout "$branch_name"
+  if ! git branch --list | grep -q "$branch_name"; then
+    echo "Error: The branch '$branch_name' does not exist."
     return
   fi
 
-  echo "Error: The branch '$branch_name' does not exist."
+  echo "Switching to branch $branch_name..."
+  git checkout "$branch_name"
 }
 
 git_commit() {
